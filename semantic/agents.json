@@ -1,0 +1,422 @@
+[
+  {
+    "name": "feed-parser-01",
+    "category": "Data Ingestion",
+    "original_desc": "Parses real-time market data feeds from Bloomberg and Reuters, normalizing equity prices and trade volumes into a standardized schema for downstream consumption.",
+    "tools": [
+      "feed_connect",
+      "schema_normalize",
+      "data_validate",
+      "publish_event",
+      "error_log"
+    ],
+    "activity_logs": "Day 1-5: feed_connect x40, schema_normalize x38, data_validate x35, publish_event x35. Output: parsed 38 Bloomberg equity feeds, normalized 35 price records, validated trade volume schemas. Day 6-10: feed_connect x42, schema_normalize x40, data_validate x38, error_log x3. Output: ingested Reuters FX data, normalized currency pairs, logged 3 malformed feed errors. Day 11-15: feed_connect x39, schema_normalize x37, publish_event x37, data_validate x36. Output: processed equity price updates, published 37 normalized events to downstream consumers. Day 16-20: feed_connect x44, schema_normalize x42, data_validate x40, publish_event x40. Output: high-volume trade feed ingestion, normalized 42 Bloomberg records, validated trade volume schemas. Day 21-25: feed_connect x38, schema_normalize x36, data_validate x34, error_log x2. Output: parsed market close feed, normalized end-of-day equity prices, logged 2 schema mismatches. Day 26-30: feed_connect x41, schema_normalize x39, data_validate x37, publish_event x37. Output: ingested pre-market data feeds, normalized price ticks, published events to data lake.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "stream-loader-02",
+    "category": "Data Ingestion",
+    "original_desc": "Streams high-frequency trading data into the data warehouse using Kafka consumers, handling deduplication and late-arriving events for accurate time-series storage.",
+    "tools": [
+      "kafka_consume",
+      "deduplicate",
+      "warehouse_insert",
+      "lag_monitor",
+      "checkpoint_write"
+    ],
+    "activity_logs": "Day 1-5: kafka_consume x120, deduplicate x18, warehouse_insert x102, lag_monitor x10. Output: consumed 120 Kafka messages from trading topic, deduplicated 18 duplicate events, inserted 102 trade records into warehouse. Day 6-10: kafka_consume x135, deduplicate x22, warehouse_insert x113, checkpoint_write x5, lag_monitor x12. Output: streamed high-frequency order book updates, handled late-arriving events, wrote 5 Kafka checkpoints. Day 11-15: kafka_consume x118, deduplicate x15, warehouse_insert x103, lag_monitor x8. Output: processed trading stream, deduplicated late events, loaded time-series trade data into warehouse. Day 16-20: kafka_consume x142, deduplicate x25, warehouse_insert x117, checkpoint_write x7. Output: peak trading session, high-volume kafka stream consumption, dedup processing, warehouse inserts. Day 21-25: kafka_consume x110, deduplicate x14, warehouse_insert x96, lag_monitor x9. Output: off-peak trading stream, deduplication, time-series warehouse storage for analytics. Day 26-30: kafka_consume x128, deduplicate x20, warehouse_insert x108, checkpoint_write x6. Output: end-of-month trading data stream, kafka consumer lag monitored, warehouse bulk inserts completed.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "etl-pipeline-03",
+    "category": "Data Ingestion",
+    "original_desc": "Runs nightly ETL jobs to extract transaction records from core banking systems, transform currency fields, and load enriched data into the analytical data warehouse.",
+    "tools": [
+      "db_extract",
+      "currency_convert",
+      "data_transform",
+      "warehouse_load",
+      "job_scheduler"
+    ],
+    "activity_logs": "Day 1-5: job_scheduler x5, db_extract x5, currency_convert x5, data_transform x5, warehouse_load x5. Output: nightly ETL run, extracted 15000 transaction records from core banking DB, converted USD EUR GBP currencies, loaded enriched data into warehouse. Day 6-10: job_scheduler x5, db_extract x5, currency_convert x5, data_transform x5, warehouse_load x5. Output: ETL batch processing, transaction extraction, multi-currency conversion, analytical warehouse load. Day 11-15: job_scheduler x5, db_extract x5, currency_convert x5, data_transform x5, warehouse_load x5. Output: mid-month ETL, extracted settlement transactions, currency normalization, enriched data load. Day 16-20: job_scheduler x5, db_extract x6, currency_convert x6, data_transform x6, warehouse_load x5. Output: high-volume ETL batch, extracted 18000 transactions, FX conversion, warehouse load with data quality checks. Day 21-25: job_scheduler x5, db_extract x5, currency_convert x5, data_transform x5, warehouse_load x5. Output: nightly ETL completed, banking transaction extraction, currency transform, warehouse ingestion. Day 26-30: job_scheduler x5, db_extract x5, currency_convert x5, data_transform x5, warehouse_load x5. Output: month-end ETL run, full transaction history extract, currency reconciliation, warehouse final load.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "data-sync-04",
+    "category": "Data Ingestion",
+    "original_desc": "Synchronizes customer and account master data across CRM, core banking, and data warehouse systems, resolving conflicts using last-write-wins merge strategy and tracking delta changes.",
+    "tools": [
+      "crm_pull",
+      "conflict_resolve",
+      "schema_map",
+      "sync_push",
+      "delta_track"
+    ],
+    "activity_logs": "Day 1-5: crm_pull x30, schema_map x30, conflict_resolve x8, sync_push x28, delta_track x5. Output: pulled 30 customer records from CRM, mapped schemas, resolved 8 merge conflicts, pushed synced data to core banking. Day 6-10: crm_pull x35, schema_map x35, conflict_resolve x12, sync_push x30, delta_track x7. Output: customer master data sync, schema mapping, conflict resolution via last-write-wins, delta tracking for 7 changed accounts. Day 11-15: crm_pull x28, schema_map x28, conflict_resolve x6, sync_push x26, delta_track x4. Output: account data synchronization, CRM to warehouse sync, schema normalization, merge conflict resolution. Day 16-20: crm_pull x40, schema_map x40, conflict_resolve x15, sync_push x38, delta_track x9. Output: bulk account update sync, pulled customer records, mapped fields, resolved merge conflicts, pushed to all systems. Day 21-25: crm_pull x32, schema_map x32, conflict_resolve x9, sync_push x29, delta_track x6. Output: customer data synchronization across CRM and warehouse, delta change tracking, schema alignment. Day 26-30: crm_pull x36, schema_map x36, conflict_resolve x11, sync_push x33, delta_track x8. Output: month-end master data sync, customer account reconciliation, CRM and banking system alignment.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "drift-agent-01",
+    "category": "Data Ingestion",
+    "original_desc": "Ingests and normalizes raw market data streams from external providers into internal data lake storage with schema validation and deduplication for downstream pipeline consumption.",
+    "tools": [
+      "feed_connect",
+      "schema_validate",
+      "deduplicate",
+      "lake_write",
+      "error_log"
+    ],
+    "activity_logs": "Day 1-5: kyc_check x25, aml_screen x20, compliance_flag x8, audit_trail x30, watchlist_scan x15. Output: completed KYC verification for 25 new accounts, AML screening flagged 8 suspicious transactions, audit trails generated, watchlist scans performed. Day 6-10: regulatory_report x5, audit_trail x28, compliance_flag x10, kyc_check x22, aml_screen x18. Output: filed 5 regulatory compliance reports, generated audit documentation, flagged 10 compliance violations, AML alerts raised. Day 11-15: kyc_check x30, aml_screen x25, watchlist_scan x20, compliance_flag x12, audit_trail x35. Output: KYC batch processing, AML transaction screening, watchlist matching, compliance violation flagging, audit log generation. Day 16-20: regulatory_report x7, audit_trail x32, kyc_check x28, aml_screen x22, compliance_flag x9. Output: regulatory filings submitted, audit trail maintenance, KYC reviews, AML alerts, compliance reports. Day 21-25: kyc_check x26, aml_screen x21, watchlist_scan x18, compliance_flag x11, audit_trail x30. Output: customer KYC verification, AML transaction monitoring, suspicious activity flagging, audit trail updates. Day 26-30: regulatory_report x6, audit_trail x29, kyc_check x24, aml_screen x19, compliance_flag x8. Output: month-end compliance reporting, KYC reconciliation, AML screening summary, audit documentation finalized.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "risk-monitor-01",
+    "category": "Risk Monitoring",
+    "original_desc": "Monitors real-time portfolio risk metrics including VaR, exposure limits, and Greeks, triggering alerts when thresholds are breached and escalating to risk managers.",
+    "tools": [
+      "risk_calc",
+      "threshold_check",
+      "alert_trigger",
+      "exposure_query",
+      "escalate"
+    ],
+    "activity_logs": "Day 1-5: risk_calc x50, threshold_check x50, exposure_query x40, alert_trigger x5, escalate x1. Output: calculated VaR for 50 positions, checked exposure limits, triggered 5 threshold breach alerts, escalated 1 critical risk event. Day 6-10: risk_calc x55, threshold_check x55, exposure_query x45, alert_trigger x8, escalate x2. Output: real-time portfolio risk monitoring, VaR recalculation, exposure limit checks, 8 alerts triggered, 2 manager escalations. Day 11-15: risk_calc x48, threshold_check x48, exposure_query x38, alert_trigger x4. Output: portfolio risk metrics computed, Greeks calculation, threshold monitoring, 4 limit breach notifications. Day 16-20: risk_calc x62, threshold_check x62, exposure_query x52, alert_trigger x10, escalate x3. Output: high-volatility session risk monitoring, VaR spike detection, exposure breaches alerted, 3 escalations to risk desk. Day 21-25: risk_calc x51, threshold_check x51, exposure_query x41, alert_trigger x6, escalate x1. Output: portfolio exposure monitoring, delta and gamma risk calculations, limit threshold checks, alerts dispatched. Day 26-30: risk_calc x54, threshold_check x54, exposure_query x44, alert_trigger x7, escalate x2. Output: month-end risk assessment, VaR summary, exposure limit compliance, portfolio risk report generated.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "threshold-watcher-02",
+    "category": "Risk Monitoring",
+    "original_desc": "Continuously monitors configurable alert thresholds across trading limits, margin levels, and liquidity buffers, dispatching real-time notifications when any limit is approached or breached.",
+    "tools": [
+      "threshold_poll",
+      "margin_check",
+      "liquidity_calc",
+      "notify_dispatch",
+      "breach_log"
+    ],
+    "activity_logs": "Day 1-5: threshold_poll x200, margin_check x60, liquidity_calc x40, notify_dispatch x12, breach_log x5. Output: polled 200 threshold configs, margin level checks, liquidity buffer monitoring, dispatched 12 breach notifications, logged 5 limit violations. Day 6-10: threshold_poll x210, margin_check x65, liquidity_calc x42, notify_dispatch x15, breach_log x7. Output: continuous threshold surveillance, margin call warnings, liquidity buffer alerts, 15 notifications dispatched. Day 11-15: threshold_poll x195, margin_check x58, liquidity_calc x38, notify_dispatch x10, breach_log x4. Output: threshold polling, margin level monitoring, liquidity calculations, 10 limit breach dispatches. Day 16-20: threshold_poll x220, margin_check x70, liquidity_calc x48, notify_dispatch x18, breach_log x9. Output: peak trading session threshold monitoring, margin warnings, liquidity alerts, 18 notifications, 9 breach logs. Day 21-25: threshold_poll x198, margin_check x59, liquidity_calc x39, notify_dispatch x11, breach_log x5. Output: threshold configuration scanning, margin and liquidity monitoring, alert dispatching for limit breaches. Day 26-30: threshold_poll x205, margin_check x62, liquidity_calc x41, notify_dispatch x13, breach_log x6. Output: month-end threshold review, margin and liquidity summary, breach log compilation.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "volatility-scanner-03",
+    "category": "Risk Monitoring",
+    "original_desc": "Scans equity and FX markets for unusual volatility patterns, computing rolling standard deviations and flagging instruments exceeding historical volatility thresholds for risk desk review.",
+    "tools": [
+      "vol_compute",
+      "stddev_calc",
+      "instrument_flag",
+      "historical_compare",
+      "risk_report"
+    ],
+    "activity_logs": "Day 1-5: vol_compute x80, stddev_calc x80, historical_compare x75, instrument_flag x12, risk_report x1. Output: computed volatility for 80 instruments, calculated rolling standard deviations, compared against historical norms, flagged 12 high-volatility instruments. Day 6-10: vol_compute x85, stddev_calc x85, historical_compare x80, instrument_flag x15, risk_report x2. Output: equity and FX volatility scanning, rolling stddev computation, historical volatility comparison, flagged instruments for risk desk. Day 11-15: vol_compute x78, stddev_calc x78, historical_compare x72, instrument_flag x10, risk_report x1. Output: volatility pattern detection, standard deviation calculation, historical threshold comparison, risk flagging. Day 16-20: vol_compute x92, stddev_calc x92, historical_compare x88, instrument_flag x20, risk_report x3. Output: high-volatility market session, spike detection, stddev breach flagging, risk desk reports generated. Day 21-25: vol_compute x81, stddev_calc x81, historical_compare x76, instrument_flag x13, risk_report x1. Output: volatility monitoring, standard deviation analysis, historical volatility benchmarking, instrument flagging. Day 26-30: vol_compute x84, stddev_calc x84, historical_compare x79, instrument_flag x14, risk_report x2. Output: month-end volatility summary, rolling stddev report, high-volatility instrument list for review.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "portfolio-risk-04",
+    "category": "Risk Monitoring",
+    "original_desc": "Performs continuous portfolio-level risk aggregation, computing stress test scenarios and drawdown analysis to ensure exposure remains within approved risk appetite limits.",
+    "tools": [
+      "stress_test",
+      "drawdown_calc",
+      "exposure_agg",
+      "scenario_run",
+      "limit_check"
+    ],
+    "activity_logs": "Day 1-5: stress_test x10, scenario_run x25, drawdown_calc x20, exposure_agg x30, limit_check x30. Output: ran 10 stress test scenarios, computed portfolio drawdown, aggregated exposure across asset classes, checked risk limits. Day 6-10: stress_test x12, scenario_run x30, drawdown_calc x22, exposure_agg x35, limit_check x35. Output: stress test scenarios for market shock, drawdown analysis, exposure aggregation, risk appetite limit checks. Day 11-15: stress_test x10, scenario_run x24, drawdown_calc x19, exposure_agg x28, limit_check x28. Output: portfolio stress testing, scenario analysis, drawdown monitoring, exposure aggregation for risk report. Day 16-20: stress_test x15, scenario_run x35, drawdown_calc x25, exposure_agg x40, limit_check x40. Output: severe stress scenario runs, drawdown spike detection, exposure limit breach analysis, risk appetite review. Day 21-25: stress_test x11, scenario_run x27, drawdown_calc x21, exposure_agg x31, limit_check x31. Output: scenario-based stress testing, drawdown computation, portfolio exposure aggregation, limit compliance. Day 26-30: stress_test x13, scenario_run x28, drawdown_calc x23, exposure_agg x33, limit_check x33. Output: month-end stress test report, drawdown summary, exposure aggregation, risk appetite compliance review.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "drift-agent-02",
+    "category": "Risk Monitoring",
+    "original_desc": "Monitors intraday market risk exposure across all trading desks, computing real-time VaR and Greeks to ensure positions remain within approved risk limits and regulatory capital requirements.",
+    "tools": [
+      "risk_calc",
+      "var_compute",
+      "greeks_calc",
+      "exposure_check",
+      "breach_alert"
+    ],
+    "activity_logs": "Day 1-5: ticket_create x40, customer_lookup x35, sla_check x38, escalate_ticket x8, crm_update x30. Output: created 40 customer support tickets, looked up 35 customer accounts, checked SLA compliance, escalated 8 high-priority issues, updated CRM records. Day 6-10: ticket_create x45, customer_lookup x40, sla_check x43, escalate_ticket x10, crm_update x35. Output: customer ticket routing, SLA monitoring, ticket escalation, CRM account updates, support queue management. Day 11-15: ticket_create x38, customer_lookup x32, sla_check x36, escalate_ticket x7, crm_update x28. Output: support ticket classification, account lookups, SLA checks, escalations, CRM record updates. Day 16-20: ticket_create x50, customer_lookup x45, sla_check x48, escalate_ticket x12, crm_update x40. Output: high-volume customer support, ticket triage, SLA breach warnings, escalation to senior agents, CRM bulk update. Day 21-25: ticket_create x42, customer_lookup x37, sla_check x40, escalate_ticket x9, crm_update x32. Output: customer ticket management, account verification, SLA compliance, support escalation, CRM data entry. Day 26-30: ticket_create x44, customer_lookup x38, sla_check x41, escalate_ticket x10, crm_update x34. Output: month-end customer support summary, ticket resolution rates, SLA compliance report, CRM data quality review.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "compliance-checker-01",
+    "category": "Compliance",
+    "original_desc": "Validates financial transactions against regulatory compliance rules, flagging violations for manual review and generating audit-ready reports for regulators and internal auditors.",
+    "tools": [
+      "rule_validate",
+      "violation_flag",
+      "audit_report",
+      "regulator_notify",
+      "case_open"
+    ],
+    "activity_logs": "Day 1-5: rule_validate x150, violation_flag x12, audit_report x2, case_open x5, regulator_notify x1. Output: validated 150 transactions against compliance rules, flagged 12 violations, opened 5 compliance cases, filed 2 audit reports. Day 6-10: rule_validate x160, violation_flag x15, audit_report x3, case_open x7, regulator_notify x2. Output: regulatory compliance validation, violation flagging, audit report generation, compliance case management, regulator notifications. Day 11-15: rule_validate x145, violation_flag x10, audit_report x2, case_open x4, regulator_notify x1. Output: transaction compliance checks, rule violation detection, audit documentation, compliance case opening. Day 16-20: rule_validate x170, violation_flag x18, audit_report x4, case_open x9, regulator_notify x3. Output: high-volume compliance validation, multiple violations flagged, audit reports generated, regulator filings submitted. Day 21-25: rule_validate x152, violation_flag x13, audit_report x2, case_open x6, regulator_notify x1. Output: regulatory rule validation, violation detection, audit trail maintenance, compliance case tracking. Day 26-30: rule_validate x158, violation_flag x14, audit_report x5, case_open x7, regulator_notify x2. Output: month-end compliance review, full transaction audit, violation summary, regulatory report submission.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "audit-logger-02",
+    "category": "Compliance",
+    "original_desc": "Maintains immutable audit trails for all system and user actions, capturing timestamps, actor identities, and change diffs to support forensic investigations and regulatory audits.",
+    "tools": [
+      "event_capture",
+      "diff_compute",
+      "audit_write",
+      "immutable_seal",
+      "forensic_query"
+    ],
+    "activity_logs": "Day 1-5: event_capture x300, audit_write x300, diff_compute x120, immutable_seal x5, forensic_query x8. Output: captured 300 system events, generated audit entries, computed diffs for 120 change events, sealed immutable audit blocks. Day 6-10: event_capture x320, audit_write x320, diff_compute x135, immutable_seal x5, forensic_query x12. Output: continuous audit trail capture, actor identity logging, change diff computation, immutable record sealing, forensic queries. Day 11-15: event_capture x290, audit_write x290, diff_compute x110, immutable_seal x5, forensic_query x7. Output: audit event logging, user action capture, diff generation, audit block sealing, investigation queries. Day 16-20: event_capture x340, audit_write x340, diff_compute x150, immutable_seal x5, forensic_query x15. Output: high-activity audit capture, bulk event logging, extensive diff computation, forensic analysis queries. Day 21-25: event_capture x305, audit_write x305, diff_compute x125, immutable_seal x5, forensic_query x9. Output: audit trail maintenance, event capture, diff logging, immutable sealing, forensic query support. Day 26-30: event_capture x310, audit_write x310, diff_compute x130, immutable_seal x5, forensic_query x10. Output: month-end audit log finalization, complete event history, diff archive, immutable audit seal, forensic readiness.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "kyc-validator-03",
+    "category": "Compliance",
+    "original_desc": "Automates KYC document verification and identity screening for new customer onboarding, cross-referencing against global watchlists, PEP lists, and sanctions databases.",
+    "tools": [
+      "doc_verify",
+      "watchlist_screen",
+      "pep_check",
+      "sanctions_lookup",
+      "kyc_approve"
+    ],
+    "activity_logs": "Day 1-5: doc_verify x50, watchlist_screen x50, pep_check x50, sanctions_lookup x50, kyc_approve x42. Output: verified 50 KYC document submissions, screened against watchlists, PEP checks performed, sanctions database lookups, 42 customer approvals granted. Day 6-10: doc_verify x55, watchlist_screen x55, pep_check x55, sanctions_lookup x55, kyc_approve x46. Output: KYC identity verification, watchlist screening, politically exposed persons checks, sanctions screening. Day 11-15: doc_verify x48, watchlist_screen x48, pep_check x48, sanctions_lookup x48, kyc_approve x40. Output: identity document validation, AML watchlist screening, PEP database checks, sanctions cross-referencing. Day 16-20: doc_verify x60, watchlist_screen x60, pep_check x60, sanctions_lookup x60, kyc_approve x51. Output: high-volume KYC processing, document verification batch, comprehensive watchlist and sanctions screening. Day 21-25: doc_verify x52, watchlist_screen x52, pep_check x52, sanctions_lookup x52, kyc_approve x44. Output: KYC document review, identity validation, watchlist and PEP screening, sanctions compliance checks. Day 26-30: doc_verify x53, watchlist_screen x53, pep_check x53, sanctions_lookup x53, kyc_approve x45. Output: month-end KYC batch processing, document audit, watchlist refresh screening, sanctions compliance.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "regulatory-reporter-04",
+    "category": "Compliance",
+    "original_desc": "Compiles and submits mandatory regulatory filings including MiFID II transaction reports, EMIR trade confirmations, and CFTC position reports on scheduled deadlines.",
+    "tools": [
+      "mifid_compile",
+      "emir_format",
+      "cftc_submit",
+      "deadline_monitor",
+      "filing_archive"
+    ],
+    "activity_logs": "Day 1-5: mifid_compile x20, emir_format x15, deadline_monitor x5, filing_archive x3. Output: compiled 20 MiFID II transaction reports, formatted EMIR trade confirmations, monitored filing deadlines, archived submissions. Day 6-10: mifid_compile x22, emir_format x18, cftc_submit x5, deadline_monitor x5, filing_archive x4. Output: MiFID II reporting, EMIR formatting, CFTC position report submission, deadline tracking, regulatory archive. Day 11-15: mifid_compile x19, emir_format x14, cftc_submit x4, deadline_monitor x5, filing_archive x3. Output: regulatory report compilation, MiFID transaction reporting, EMIR confirmations, CFTC filings, deadline compliance. Day 16-20: mifid_compile x25, emir_format x20, cftc_submit x6, deadline_monitor x5, filing_archive x5. Output: high-volume regulatory submissions, MiFID II batch reports, EMIR trade confirmations, CFTC filings, archival. Day 21-25: mifid_compile x21, emir_format x16, cftc_submit x5, deadline_monitor x5, filing_archive x3. Output: regulatory reporting, MiFID II transaction submissions, EMIR compliance, CFTC position data, filing archive. Day 26-30: mifid_compile x23, emir_format x17, cftc_submit x5, deadline_monitor x5, filing_archive x6. Output: month-end regulatory filing sprint, MiFID EMIR CFTC submissions, deadline compliance, complete archive.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "drift-agent-03",
+    "category": "Compliance",
+    "original_desc": "Screens all outbound transactions for sanctions list matches and AML rule violations, generating compliance flags and case files for review by the financial crime compliance team.",
+    "tools": [
+      "sanctions_screen",
+      "aml_check",
+      "case_generate",
+      "compliance_flag",
+      "alert_dispatch"
+    ],
+    "activity_logs": "Day 1-5: cpu_monitor x100, memory_check x100, disk_scan x50, pod_restart x3, health_ping x200. Output: monitored CPU utilization across 100 nodes, memory usage checks, disk capacity scans, restarted 3 unhealthy pods, health pings completed. Day 6-10: cpu_monitor x105, memory_check x105, disk_scan x55, pod_restart x5, health_ping x210, scale_up x2. Output: infrastructure health monitoring, CPU and memory tracking, disk usage, pod restarts, health checks, auto-scaling triggered. Day 11-15: cpu_monitor x98, memory_check x98, disk_scan x48, pod_restart x2, health_ping x195. Output: cluster health monitoring, CPU monitoring, memory checks, disk scans, pod health management. Day 16-20: cpu_monitor x112, memory_check x112, disk_scan x60, pod_restart x7, health_ping x225, scale_up x4. Output: high-load infrastructure monitoring, CPU spike detection, memory pressure alerts, disk utilization, pod management. Day 21-25: cpu_monitor x101, memory_check x101, disk_scan x51, pod_restart x3, health_ping x202. Output: infrastructure monitoring, compute resource checks, disk capacity management, pod health maintenance. Day 26-30: cpu_monitor x103, memory_check x103, disk_scan x52, pod_restart x4, health_ping x206. Output: month-end infrastructure health summary, CPU memory utilization report, disk usage audit, cluster status.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "ticket-router-01",
+    "category": "Customer Ops",
+    "original_desc": "Routes incoming customer support tickets to the appropriate team based on issue type, urgency, and agent availability, ensuring SLA compliance and minimal queue wait times.",
+    "tools": [
+      "ticket_classify",
+      "queue_assign",
+      "sla_check",
+      "agent_lookup",
+      "notify_customer"
+    ],
+    "activity_logs": "Day 1-5: ticket_classify x80, queue_assign x80, sla_check x80, agent_lookup x75, notify_customer x70. Output: classified 80 tickets by issue type, assigned to queues, checked SLA deadlines, located available agents, notified customers. Day 6-10: ticket_classify x90, queue_assign x90, sla_check x90, agent_lookup x85, notify_customer x80. Output: customer ticket routing, issue classification, queue management, SLA monitoring, agent assignment, customer notifications. Day 11-15: ticket_classify x75, queue_assign x75, sla_check x75, agent_lookup x70, notify_customer x65. Output: support ticket classification, urgency-based queue assignment, SLA compliance checks, agent availability lookup. Day 16-20: ticket_classify x100, queue_assign x100, sla_check x100, agent_lookup x95, notify_customer x90. Output: high-volume ticket routing, classification accuracy improvement, SLA breach prevention, agent workload balancing. Day 21-25: ticket_classify x82, queue_assign x82, sla_check x82, agent_lookup x77, notify_customer x72. Output: ticket routing, customer issue classification, SLA checks, agent lookup, customer communication. Day 26-30: ticket_classify x85, queue_assign x85, sla_check x85, agent_lookup x80, notify_customer x75. Output: month-end support metrics, ticket routing summary, SLA compliance report, queue performance review.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "account-manager-02",
+    "category": "Customer Ops",
+    "original_desc": "Manages customer account lifecycle events including upgrades, downgrades, and closures, orchestrating CRM updates, billing adjustments, and confirmation communications.",
+    "tools": [
+      "account_update",
+      "billing_adjust",
+      "crm_write",
+      "confirmation_send",
+      "lifecycle_log"
+    ],
+    "activity_logs": "Day 1-5: account_update x40, billing_adjust x15, crm_write x40, confirmation_send x35, lifecycle_log x5. Output: processed 40 account lifecycle events, adjusted billing for 15 customers, updated CRM, sent confirmations. Day 6-10: account_update x45, billing_adjust x18, crm_write x45, confirmation_send x40, lifecycle_log x7. Output: customer account management, billing adjustments, CRM updates, upgrade and downgrade processing, lifecycle events. Day 11-15: account_update x38, billing_adjust x14, crm_write x38, confirmation_send x33, lifecycle_log x4. Output: account lifecycle management, billing updates, CRM record updates, customer confirmations. Day 16-20: account_update x52, billing_adjust x22, crm_write x52, confirmation_send x47, lifecycle_log x9. Output: high-volume account changes, billing adjustments, CRM bulk updates, confirmation dispatch. Day 21-25: account_update x41, billing_adjust x16, crm_write x41, confirmation_send x36, lifecycle_log x5. Output: account update processing, billing reconciliation, CRM maintenance, customer lifecycle management. Day 26-30: account_update x43, billing_adjust x17, crm_write x43, confirmation_send x38, lifecycle_log x6. Output: month-end account review, billing adjustment summary, CRM data quality check, lifecycle event log.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "onboarding-bot-03",
+    "category": "Customer Ops",
+    "original_desc": "Guides new customers through digital onboarding, collecting KYC documents, verifying identity, and provisioning account access upon successful verification and compliance approval.",
+    "tools": [
+      "doc_collect",
+      "identity_verify",
+      "account_provision",
+      "welcome_send",
+      "status_update"
+    ],
+    "activity_logs": "Day 1-5: doc_collect x30, identity_verify x28, account_provision x25, welcome_send x25, status_update x30. Output: collected onboarding documents from 30 new customers, verified 28 identities, provisioned 25 accounts, sent welcome messages. Day 6-10: doc_collect x35, identity_verify x32, account_provision x29, welcome_send x29, status_update x35. Output: customer onboarding flow, document collection, identity verification, account provisioning, welcome communications. Day 11-15: doc_collect x28, identity_verify x26, account_provision x23, welcome_send x23, status_update x28. Output: new customer onboarding, KYC document collection, identity checks, account setup, onboarding status updates. Day 16-20: doc_collect x40, identity_verify x37, account_provision x33, welcome_send x33, status_update x40. Output: high-volume onboarding batch, document collection, identity verification, account provisioning. Day 21-25: doc_collect x31, identity_verify x29, account_provision x26, welcome_send x26, status_update x31. Output: onboarding pipeline, KYC document intake, identity verification, account access provisioning. Day 26-30: doc_collect x33, identity_verify x30, account_provision x27, welcome_send x27, status_update x33. Output: month-end onboarding summary, document processing stats, identity verification rates, provisioning report.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "support-escalator-04",
+    "category": "Customer Ops",
+    "original_desc": "Detects unresolved customer issues that breach SLA thresholds and automatically escalates them to senior support teams or account managers with full context and resolution history.",
+    "tools": [
+      "sla_monitor",
+      "escalation_trigger",
+      "context_bundle",
+      "notify_manager",
+      "resolution_track"
+    ],
+    "activity_logs": "Day 1-5: sla_monitor x120, escalation_trigger x15, context_bundle x15, notify_manager x12, resolution_track x10. Output: monitored 120 active tickets for SLA compliance, triggered 15 escalations, bundled context, notified managers. Day 6-10: sla_monitor x130, escalation_trigger x18, context_bundle x18, notify_manager x15, resolution_track x13. Output: SLA breach detection, automatic escalation triggers, context packaging, manager notifications, resolution tracking. Day 11-15: sla_monitor x115, escalation_trigger x12, context_bundle x12, notify_manager x10, resolution_track x9. Output: support escalation management, SLA monitoring, escalation workflow, resolution history tracking. Day 16-20: sla_monitor x145, escalation_trigger x22, context_bundle x22, notify_manager x18, resolution_track x16. Output: high-escalation period, SLA breaches detected, automatic escalations triggered, manager alerts dispatched. Day 21-25: sla_monitor x122, escalation_trigger x16, context_bundle x16, notify_manager x13, resolution_track x11. Output: SLA compliance monitoring, escalation trigger management, context bundling, manager notifications. Day 26-30: sla_monitor x125, escalation_trigger x17, context_bundle x17, notify_manager x14, resolution_track x12. Output: month-end escalation report, SLA compliance summary, resolution rate analysis, escalation trend review.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "drift-agent-04",
+    "category": "Customer Ops",
+    "original_desc": "Handles inbound customer inquiries via chat and email, resolving account questions, processing service requests, and routing complex issues to specialized support teams.",
+    "tools": [
+      "inquiry_classify",
+      "account_lookup",
+      "response_send",
+      "ticket_open",
+      "crm_update"
+    ],
+    "activity_logs": "Day 1-5: db_extract x60, data_transform x55, currency_convert x30, warehouse_load x50, schema_validate x55. Output: extracted 60 transaction batches from source databases, transformed schema fields, converted currencies, loaded enriched records into warehouse. Day 6-10: db_extract x65, data_transform x60, currency_convert x35, warehouse_load x55, schema_validate x60. Output: ETL pipeline execution, database extraction, data transformation, currency normalization, warehouse ingestion. Day 11-15: db_extract x58, data_transform x53, currency_convert x28, warehouse_load x48, schema_validate x52. Output: data extraction and transformation, ETL batch processing, currency conversion, warehouse data loading. Day 16-20: db_extract x72, data_transform x67, currency_convert x40, warehouse_load x62, schema_validate x67. Output: high-volume ETL run, large data extraction, transformation pipeline, bulk currency conversion, warehouse load. Day 21-25: db_extract x61, data_transform x56, currency_convert x31, warehouse_load x51, schema_validate x56. Output: ETL data pipeline, database record extraction, schema transformation, currency fields, warehouse storage. Day 26-30: db_extract x63, data_transform x58, currency_convert x32, warehouse_load x53, schema_validate x58. Output: month-end ETL batch, full data extraction, transformation summary, currency reconciliation, warehouse final load.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "report-gen-01",
+    "category": "Reporting",
+    "original_desc": "Generates scheduled daily, weekly, and monthly performance reports for portfolio managers, aggregating P&L, trade summaries, and risk metrics into formatted PDF and Excel outputs.",
+    "tools": [
+      "data_pull",
+      "pnl_aggregate",
+      "report_format",
+      "pdf_render",
+      "distribute_report"
+    ],
+    "activity_logs": "Day 1-5: data_pull x5, pnl_aggregate x5, report_format x5, pdf_render x5, distribute_report x5. Output: pulled P&L data, aggregated daily performance metrics, formatted report templates, rendered PDFs, distributed to portfolio managers. Day 6-10: data_pull x8, pnl_aggregate x8, report_format x8, pdf_render x8, distribute_report x8. Output: daily and weekly report generation, P&L aggregation, report formatting, PDF production, distribution to stakeholders. Day 11-15: data_pull x5, pnl_aggregate x5, report_format x5, pdf_render x5, distribute_report x5. Output: mid-month performance reports, P&L summaries, trade activity reports, risk metric summaries, PDF delivery. Day 16-20: data_pull x6, pnl_aggregate x6, report_format x6, pdf_render x6, distribute_report x6. Output: weekly report batch, P&L aggregation, formatted portfolio performance, PDF rendering, report distribution. Day 21-25: data_pull x5, pnl_aggregate x5, report_format x5, pdf_render x5, distribute_report x5. Output: performance report generation, trade summary, P&L metrics, formatted outputs, portfolio manager distribution. Day 26-30: data_pull x10, pnl_aggregate x10, report_format x10, pdf_render x10, distribute_report x10. Output: month-end comprehensive reporting, full P&L report, trade summary, risk metrics, PDF and Excel generation.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "dashboard-builder-02",
+    "category": "Reporting",
+    "original_desc": "Builds and maintains real-time executive dashboards displaying portfolio performance, risk metrics, and operational KPIs using live data feeds and interactive visualizations.",
+    "tools": [
+      "data_stream",
+      "kpi_compute",
+      "chart_render",
+      "dashboard_update",
+      "alert_widget"
+    ],
+    "activity_logs": "Day 1-5: data_stream x200, kpi_compute x100, chart_render x50, dashboard_update x50, alert_widget x10. Output: streamed live portfolio data, computed 100 KPI metrics, rendered 50 dashboard charts, updated executive dashboards, configured alert widgets. Day 6-10: data_stream x210, kpi_compute x105, chart_render x55, dashboard_update x55, alert_widget x12. Output: real-time dashboard data, KPI computation, chart visualization, dashboard refresh, performance alert widgets. Day 11-15: data_stream x195, kpi_compute x98, chart_render x48, dashboard_update x48, alert_widget x9. Output: live dashboard updates, KPI tracking, visualization rendering, executive dashboard maintenance. Day 16-20: data_stream x220, kpi_compute x110, chart_render x60, dashboard_update x60, alert_widget x14. Output: high-traffic dashboard session, KPI recalculation, chart re-renders, dashboard updates, performance alerts. Day 21-25: data_stream x202, kpi_compute x101, chart_render x51, dashboard_update x51, alert_widget x11. Output: dashboard maintenance, KPI monitoring, visualization updates, real-time data streaming. Day 26-30: data_stream x208, kpi_compute x104, chart_render x53, dashboard_update x53, alert_widget x12. Output: month-end dashboard refresh, KPI summary, chart archive, executive dashboard publication.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "metrics-aggregator-03",
+    "category": "Reporting",
+    "original_desc": "Aggregates operational and financial metrics from across all business units, computing weighted averages, variance analysis, and trend lines for enterprise reporting consumption.",
+    "tools": [
+      "metric_collect",
+      "weighted_avg",
+      "variance_calc",
+      "trend_compute",
+      "aggregate_store"
+    ],
+    "activity_logs": "Day 1-5: metric_collect x120, weighted_avg x60, variance_calc x60, trend_compute x40, aggregate_store x5. Output: collected metrics from 120 sources, computed weighted averages, variance analysis across business units, trend computation, aggregate storage. Day 6-10: metric_collect x130, weighted_avg x65, variance_calc x65, trend_compute x45, aggregate_store x6. Output: metrics aggregation, weighted average computation, variance analysis, trend line generation, enterprise data store. Day 11-15: metric_collect x115, weighted_avg x58, variance_calc x58, trend_compute x38, aggregate_store x5. Output: operational metric collection, weighted computation, variance tracking, trend analysis, aggregate storage. Day 16-20: metric_collect x140, weighted_avg x70, variance_calc x70, trend_compute x50, aggregate_store x7. Output: high-volume metric aggregation, multi-unit weighted averages, variance computation, trend analysis. Day 21-25: metric_collect x122, weighted_avg x61, variance_calc x61, trend_compute x41, aggregate_store x5. Output: enterprise metric aggregation, weighted average computation, variance and trend analysis, storage. Day 26-30: metric_collect x125, weighted_avg x63, variance_calc x63, trend_compute x43, aggregate_store x8. Output: month-end metric aggregation, full variance report, trend analysis summary, enterprise aggregate store.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "executive-summary-04",
+    "category": "Reporting",
+    "original_desc": "Compiles weekly executive summary reports by extracting highlights from operational dashboards, formatting insights in board-ready presentations, and distributing via automated email.",
+    "tools": [
+      "insight_extract",
+      "summary_compile",
+      "presentation_format",
+      "email_send",
+      "archive_store"
+    ],
+    "activity_logs": "Day 1-5: insight_extract x5, summary_compile x5, presentation_format x5, email_send x5, archive_store x1. Output: extracted operational highlights, compiled executive summaries, formatted board presentations, sent weekly executive emails. Day 6-10: insight_extract x7, summary_compile x7, presentation_format x7, email_send x7, archive_store x1. Output: executive report compilation, insight extraction from dashboards, presentation formatting, email distribution. Day 11-15: insight_extract x5, summary_compile x5, presentation_format x5, email_send x5, archive_store x1. Output: mid-month executive summary, operational highlights, board-ready presentation, email dispatch. Day 16-20: insight_extract x6, summary_compile x6, presentation_format x6, email_send x6, archive_store x1. Output: weekly executive summaries, insight compilation, formatted presentations, automated email distribution. Day 21-25: insight_extract x5, summary_compile x5, presentation_format x5, email_send x5, archive_store x1. Output: executive report generation, highlight extraction, summary compilation, presentation, email sending. Day 26-30: insight_extract x12, summary_compile x12, presentation_format x12, email_send x12, archive_store x2. Output: month-end executive summary, comprehensive insight extraction, board presentation, stakeholder email distribution.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "drift-agent-05",
+    "category": "Reporting",
+    "original_desc": "Produces automated daily and monthly performance reports for fund managers, compiling NAV calculations, benchmark comparisons, and attribution analysis into formatted deliverables.",
+    "tools": [
+      "nav_calc",
+      "benchmark_pull",
+      "attribution_run",
+      "report_format",
+      "distribute_report"
+    ],
+    "activity_logs": "Day 1-5: var_compute x50, stress_test x10, exposure_agg x45, threshold_breach x8, risk_alert x12. Output: computed VaR for 50 positions, ran 10 stress scenarios, aggregated portfolio exposure, detected 8 threshold breaches, dispatched 12 risk alerts. Day 6-10: var_compute x55, stress_test x12, exposure_agg x50, threshold_breach x10, risk_alert x15. Output: VaR calculation, stress testing, exposure aggregation, threshold breach detection, risk alert dispatching. Day 11-15: var_compute x48, stress_test x9, exposure_agg x43, threshold_breach x7, risk_alert x10. Output: portfolio VaR monitoring, stress scenario runs, exposure tracking, threshold breach alerts, risk notifications. Day 16-20: var_compute x62, stress_test x15, exposure_agg x57, threshold_breach x14, risk_alert x18. Output: high-volatility risk monitoring, VaR spike detection, stress testing, exposure limit breaches, risk alerts. Day 21-25: var_compute x51, stress_test x11, exposure_agg x46, threshold_breach x9, risk_alert x13. Output: VaR computation, stress test scenarios, portfolio exposure aggregation, threshold monitoring, risk alerts. Day 26-30: var_compute x53, stress_test x12, exposure_agg x48, threshold_breach x10, risk_alert x14. Output: month-end risk monitoring summary, VaR report, stress test results, exposure aggregation, threshold breach log.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "infra-monitor-01",
+    "category": "Infrastructure",
+    "original_desc": "Monitors cluster health metrics including CPU utilization, memory pressure, and disk I/O across all Kubernetes nodes, triggering pod restarts and escalation alerts for anomalies.",
+    "tools": [
+      "cpu_monitor",
+      "memory_check",
+      "disk_scan",
+      "pod_restart",
+      "health_alert"
+    ],
+    "activity_logs": "Day 1-5: cpu_monitor x100, memory_check x100, disk_scan x50, health_alert x5, pod_restart x2. Output: monitored CPU utilization across all nodes, memory pressure checks, disk I/O scans, 5 health alerts triggered, 2 pod restarts executed. Day 6-10: cpu_monitor x105, memory_check x105, disk_scan x55, health_alert x7, pod_restart x3. Output: continuous cluster monitoring, CPU and memory tracking, disk capacity scans, health alerts, pod restart automation. Day 11-15: cpu_monitor x98, memory_check x98, disk_scan x48, health_alert x4, pod_restart x1. Output: Kubernetes node monitoring, CPU utilization tracking, memory check, disk health, pod management. Day 16-20: cpu_monitor x115, memory_check x115, disk_scan x62, health_alert x10, pod_restart x5. Output: high-load infrastructure period, CPU spike monitoring, memory pressure alerts, disk scans, pod recovery. Day 21-25: cpu_monitor x101, memory_check x101, disk_scan x51, health_alert x5, pod_restart x2. Output: cluster health monitoring, compute resource tracking, disk scans, health alerts, pod management. Day 26-30: cpu_monitor x103, memory_check x103, disk_scan x52, health_alert x6, pod_restart x3. Output: month-end infrastructure health report, CPU summary, memory utilization, disk capacity audit.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "resource-scaler-02",
+    "category": "Infrastructure",
+    "original_desc": "Automatically scales Kubernetes deployments based on CPU and memory utilization metrics, adjusting replica counts to meet demand while respecting configured minimum and maximum limits.",
+    "tools": [
+      "metric_read",
+      "replica_adjust",
+      "scale_trigger",
+      "limit_enforce",
+      "scale_log"
+    ],
+    "activity_logs": "Day 1-5: metric_read x200, scale_trigger x8, replica_adjust x8, limit_enforce x3, scale_log x8. Output: read 200 utilization metrics, triggered 8 scaling events, adjusted replica counts, enforced min and max limits. Day 6-10: metric_read x210, scale_trigger x10, replica_adjust x10, limit_enforce x4, scale_log x10. Output: Kubernetes autoscaling, CPU and memory metric reads, replica adjustments, limit enforcement, scale event logging. Day 11-15: metric_read x195, scale_trigger x7, replica_adjust x7, limit_enforce x3, scale_log x7. Output: deployment scaling, metric monitoring, replica count adjustment, kubernetes limit enforcement. Day 16-20: metric_read x225, scale_trigger x14, replica_adjust x14, limit_enforce x6, scale_log x14. Output: high-demand scaling event, multiple deployments scaled, replica adjustments, limit enforcement. Day 21-25: metric_read x202, scale_trigger x9, replica_adjust x9, limit_enforce x3, scale_log x9. Output: autoscaling operations, metric-driven replica adjustments, Kubernetes deployment scaling. Day 26-30: metric_read x205, scale_trigger x10, replica_adjust x10, limit_enforce x4, scale_log x10. Output: month-end scaling summary, utilization-driven scaling events, replica adjustment report.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "health-checker-03",
+    "category": "Infrastructure",
+    "original_desc": "Performs continuous liveness and readiness probe checks across all microservices, logging degraded endpoints and triggering automated remediation workflows when services fail.",
+    "tools": [
+      "liveness_probe",
+      "readiness_probe",
+      "endpoint_log",
+      "remediate_trigger",
+      "status_report"
+    ],
+    "activity_logs": "Day 1-5: liveness_probe x500, readiness_probe x500, endpoint_log x20, remediate_trigger x3, status_report x1. Output: liveness probes across 500 service instances, readiness checks, logged 20 degraded endpoints, triggered 3 remediations. Day 6-10: liveness_probe x520, readiness_probe x520, endpoint_log x25, remediate_trigger x5, status_report x1. Output: microservice health probing, liveness and readiness checks, endpoint degradation logging, remediation triggers. Day 11-15: liveness_probe x490, readiness_probe x490, endpoint_log x18, remediate_trigger x2, status_report x1. Output: service health monitoring, probe execution, endpoint status logging, automated remediation. Day 16-20: liveness_probe x540, readiness_probe x540, endpoint_log x30, remediate_trigger x8, status_report x2. Output: high-failure-rate period, extensive probing, multiple endpoint failures, remediation workflows triggered. Day 21-25: liveness_probe x505, readiness_probe x505, endpoint_log x21, remediate_trigger x3, status_report x1. Output: service health checks, liveness and readiness probing, degraded endpoint detection, remediation. Day 26-30: liveness_probe x510, readiness_probe x510, endpoint_log x22, remediate_trigger x4, status_report x2. Output: month-end health check summary, probe results, endpoint status report, remediation log.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "deployment-monitor-04",
+    "category": "Infrastructure",
+    "original_desc": "Tracks CI/CD pipeline deployments and rollbacks across all environments, monitoring deployment success rates, latency impacts, and triggering alerts for failed releases.",
+    "tools": [
+      "deploy_track",
+      "pipeline_poll",
+      "rollback_trigger",
+      "latency_check",
+      "release_alert"
+    ],
+    "activity_logs": "Day 1-5: deploy_track x15, pipeline_poll x100, latency_check x50, rollback_trigger x1, release_alert x2. Output: tracked 15 deployments across environments, polled CI/CD pipeline status, checked latency impact, 1 rollback triggered, 2 failure alerts dispatched. Day 6-10: deploy_track x18, pipeline_poll x110, latency_check x55, rollback_trigger x2, release_alert x3. Output: deployment tracking, CI/CD pipeline monitoring, latency measurement, rollback execution, release failure alerts. Day 11-15: deploy_track x14, pipeline_poll x95, latency_check x48, rollback_trigger x0, release_alert x1. Output: deployment monitoring, pipeline status polling, latency checks, deployment success tracking. Day 16-20: deploy_track x22, pipeline_poll x120, latency_check x65, rollback_trigger x3, release_alert x5. Output: heavy deployment period, multiple releases tracked, latency impacts measured, rollbacks triggered, failure alerts. Day 21-25: deploy_track x16, pipeline_poll x100, latency_check x51, rollback_trigger x1, release_alert x2. Output: deployment tracking, pipeline monitoring, latency checks, rollback management, release alerting. Day 26-30: deploy_track x17, pipeline_poll x105, latency_check x53, rollback_trigger x2, release_alert x3. Output: month-end deployment summary, pipeline health report, latency impact analysis, rollback incident log.",
+    "evolved_desc": ""
+  },
+  {
+    "name": "log-aggregator-05",
+    "category": "Infrastructure",
+    "original_desc": "Aggregates structured and unstructured logs from all services into a centralized log store, applying parsing rules, indexing entries, and enabling real-time search and alerting.",
+    "tools": [
+      "log_collect",
+      "parse_rule",
+      "index_write",
+      "search_enable",
+      "alert_configure"
+    ],
+    "activity_logs": "Day 1-5: log_collect x1000, parse_rule x1000, index_write x950, search_enable x5, alert_configure x3. Output: collected 1000 log entries from all services, applied parsing rules, indexed 950 entries, configured search, set up 3 alert rules. Day 6-10: log_collect x1100, parse_rule x1100, index_write x1050, search_enable x5, alert_configure x4. Output: log aggregation from microservices, parsing and normalization, index writes, search query support, alert configuration. Day 11-15: log_collect x980, parse_rule x980, index_write x930, search_enable x5, alert_configure x2. Output: centralized log collection, parse rule application, log indexing, search capability, alert management. Day 16-20: log_collect x1200, parse_rule x1200, index_write x1150, search_enable x5, alert_configure x5. Output: high-volume log ingestion, comprehensive parsing, bulk index writes, search indexing, alert rule updates. Day 21-25: log_collect x1010, parse_rule x1010, index_write x960, search_enable x5, alert_configure x3. Output: log aggregation, parsing, indexing, search, centralized log store maintenance, alert monitoring. Day 26-30: log_collect x1050, parse_rule x1050, index_write x1000, search_enable x5, alert_configure x4. Output: month-end log aggregation summary, parsing statistics, index health, search performance, alert review.",
+    "evolved_desc": ""
+  }
+]

@@ -1,0 +1,7 @@
+sentence-transformers
+scikit-learn
+scipy
+umap-learn
+matplotlib
+numpy
+mplcursors
