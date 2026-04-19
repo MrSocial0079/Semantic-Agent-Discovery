@@ -1,0 +1,124 @@
+# ============================================================
+# SECRETS AND CREDENTIALS
+# ============================================================
+.env
+.env.local
+.env.*.local
+.env.example
+
+# Service account keys and credential files
+*-key.json
+*-credentials.json
+*-service-account.json
+service-account*.json
+credentials*.json
+*secret*.json
+*credential*.json
+
+# Certificate and key files
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cert
+
+# ============================================================
+# GO BACKEND
+# ============================================================
+# Compiled binaries
+backend/server
+backend/main
+backend/tmp/
+/cloud-sql-proxy
+
+# ============================================================
+# PYTHON SDK
+# ============================================================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+venv/
+.venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.so
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# ============================================================
+# NODE / FRONTEND
+# ============================================================
+node_modules/
+frontend/dist/
+frontend/build/
+.next/
+.nuxt/
+.output/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ============================================================
+# LOCAL DEV SCRIPTS (contain hardcoded keys / URLs)
+# ============================================================
+simulate.sh
+
+# ============================================================
+# DOCKER AND INFRA
+# ============================================================
+# GCP compose file contains real DB password — see note below
+infra/docker-compose.gcp.yml
+
+# Any JSON key files dropped into infra/
+infra/*.json
+
+# ============================================================
+# IDE AND OS
+# ============================================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+
+# ============================================================
+# CLAUDE CODE (local dev tool config)
+# ============================================================
+.claude/
+
+# ============================================================
+# DATABASE AND CACHES
+# ============================================================
+*.db
+*.sqlite
+*.sqlite3
+*.sql.dump
+*.dump
+.cache/
+logs/
