@@ -9,8 +9,11 @@ Usage:
 """
 
 import sys
+import os
 import json
 import numpy as np
+
+HERE = os.path.dirname(os.path.abspath(__file__))
 from sentence_transformers import SentenceTransformer
 from scipy.spatial.distance import cosine as cosine_distance
 
@@ -76,8 +79,8 @@ def main():
     model = SentenceTransformer("all-MiniLM-L6-v2")
 
     agents, evolved_vecs = load_data(
-        "semantic/agents_final.json",
-        "semantic/vectors.npy",
+        os.path.join(HERE, "agents_final.json"),
+        os.path.join(HERE, "vectors.npy"),
     )
 
     results = semantic_search(query, agents, evolved_vecs, model, top_k=5)

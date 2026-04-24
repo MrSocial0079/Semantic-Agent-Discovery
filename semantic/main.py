@@ -4,6 +4,7 @@ Stages 1 & 2: TF-IDF keyword extraction + evolved_desc derivation
 """
 
 import json
+import os
 import re
 import time
 import numpy as np
@@ -15,6 +16,8 @@ from sklearn.metrics import adjusted_rand_score
 from sklearn.preprocessing import LabelEncoder
 from scipy.spatial.distance import cosine as cosine_distance
 from sklearn.feature_extraction.text import TfidfVectorizer
+
+HERE = os.path.dirname(os.path.abspath(__file__))
 
 
 def load_agents(path: str) -> list[dict]:
@@ -58,7 +61,7 @@ def build_evolved_desc(terms: list[str]) -> str:
 
 def main():
     t_start = time.time()
-    agents = load_agents("semantic/agents.json")
+    agents = load_agents(os.path.join(HERE, "agents.json"))
 
     # ── Stage 1: TF-IDF on combined text → keywords ──────────────────────────
     combined_docs = [
@@ -92,7 +95,7 @@ def main():
         agent["evolved_desc"] = build_evolved_desc(terms)
 
     # ── Save enriched corpus (stages 1+2 snapshot) ───────────────────────────
-    with open("semantic/agents_enriched.json", "w") as f:
+    with open(os.path.join(HERE, "agents_enriched.json"), "w") as f:
         json.dump(agents, f, indent=2)
 
     # ── Print stages 1+2 summary ──────────────────────────────────────────────
@@ -103,7 +106,7 @@ def main():
         print(f"\n[{agent['name']}]  ({agent['category']})")
         print(f"  keywords   : {agent['keywords']}")
         print(f"  evolved    : {agent['evolved_desc']}")
-    print(f"\nSaved → semantic/agents_enriched.json  ({len(agents)} agents)")
+    print(f"\nSaved → agents_enriched.json  ({len(agents)} agents)")
 
     # =========================================================================
     # Stage 3 — Semantic Embedding (all-MiniLM-L6-v2, 384-dim)
@@ -123,13 +126,13 @@ def main():
         agent["evolved_vec"]  = evolved_vecs[i].tolist()
 
     np.save(
-        "semantic/vectors.npy",
+        os.path.join(HERE, "vectors.npy"),
         {"original": original_vecs,
          "evolved":  evolved_vecs,
          "names":    [a["name"] for a in agents]},
         allow_pickle=True,
     )
-    print(f"  Embedded {len(agents)} agents → 384-dim | saved semantic/vectors.npy")
+    print(f"  Embedded {len(agents)} agents → 384-dim | saved vectors.npy")
 
     # =========================================================================
     # Stage 4 — Clustering (K-Means, k=6)
@@ -184,7 +187,7 @@ def main():
         print(f"  {flag}  {agent['name']:<35}  score={agent['drift_score']:.4f}")
 
     # ── Save fully enriched final corpus ─────────────────────────────────────
-    with open("semantic/agents_final.json", "w") as f:
+    with open(os.path.join(HERE, "agents_final.json"), "w") as f:
         json.dump(agents, f, indent=2)
 
     # =========================================================================
@@ -272,7 +275,7 @@ def main():
     print(f"Drift Recall:        {drift_caught}/5 (target 5/5 — 100%)")
     print(f"Pipeline Runtime:    {t_end - t_start:.2f} seconds")
     print("=============================================")
-    print(f"\nSaved → semantic/agents_final.json  ({len(agents)} agents)")
+    print(f"\nSaved → agents_final.json  ({len(agents)} agents)")
 
 
 if __name__ == "__main__":

@@ -5,8 +5,11 @@ Saves fleet_map.png.  Run after main.py.
 """
 
 import json
+import os
 import numpy as np
 import matplotlib
+
+HERE = os.path.dirname(os.path.abspath(__file__))
 matplotlib.use("Agg")          # headless — no display required
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
@@ -21,11 +24,11 @@ except ImportError:
 
 def main():
     # ── Load final enriched corpus ────────────────────────────────────────────
-    with open("semantic/agents_final.json") as f:
+    with open(os.path.join(HERE, "agents_final.json")) as f:
         agents = json.load(f)
 
     # ── Load pre-saved embeddings (evolved_vecs used for visual layout) ───────
-    vecs_data  = np.load("semantic/vectors.npy", allow_pickle=True).item()
+    vecs_data  = np.load(os.path.join(HERE, "vectors.npy"), allow_pickle=True).item()
     evolved_vecs   = vecs_data["evolved"]    # shape (30, 384)
     original_vecs  = vecs_data["original"]   # shape (30, 384)
     # Use average of original + evolved for a richer 2-D layout
@@ -123,7 +126,7 @@ def main():
     ax.grid(True, linestyle="--", linewidth=0.4, alpha=0.5)
 
     plt.tight_layout()
-    out_path = "semantic/fleet_map.png"
+    out_path = os.path.join(HERE, "fleet_map.png")
     plt.savefig(out_path, dpi=150, bbox_inches="tight")
     print(f"Saved → {out_path}")
     plt.close()
