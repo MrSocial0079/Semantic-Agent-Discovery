@@ -171,8 +171,4 @@
 > > >
 > > > ## Learn More
 > > >
-> > > Visit [invexsai.com](https://invexsai.com) for documentation, demos, and the hosted platform.
-> > >
-> > > ## License
-> > >
-> > > MIT — see LICENSE for details.
+> > > Visit [invexsai.com](https://invexsai.com) for documentation, demos, and the hosted platform
